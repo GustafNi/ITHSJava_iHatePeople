@@ -1,0 +1,19 @@
+@import url("../pages/Home.css");
+
+
+.mainContentInnerGrid{
+    height: 100%;
+    width:100%;
+    display: grid;
+    grid-template-columns: repeat(2, 4fr);
+    grid-template-rows: repeat(2, 2fr);
+    grid-template-areas: "how what" "when were";
+    
+
+}
+
+.mainContent{
+    background: violet;
+}
+
+
