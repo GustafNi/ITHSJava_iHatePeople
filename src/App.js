@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import logo from './logo.svg';
 import './App.css';
+import Home from "./pages/Home.jsx";
+
 
 function App() {
   return (
-    <div>
-      <h2>Hej team IHatePeople</h2>
-      <p>Här ska vi bygga våran fina app</p>
-    </div>
+
+
+    <Router>
+      <div>
+        <Route exact path="/" component={Home} />
+      </div>
+    </Router>
   );
 }
 
