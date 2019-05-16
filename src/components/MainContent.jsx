@@ -25,7 +25,7 @@ class MainContent extends Component {
         this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
     }
 
-
+//
 
     handleSearchSubmit = event => {
         event.preventDefault()
