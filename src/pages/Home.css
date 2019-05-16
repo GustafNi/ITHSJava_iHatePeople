@@ -2,7 +2,7 @@
 
 .grid-container {
     display: grid;
-    grid-template-columns: auto 600px auto;
+    grid-template-columns: auto auto auto;
     grid-template-rows: 500px auto 100px;
     grid-template-areas: "header header header" "main main main" "footer footer footer";
 }
@@ -20,7 +20,7 @@
 .mainContentOuterGrid {
     grid-area: main;
     width: 100%;
-    height: 500px;
+    height: 100%;
     
    
     
