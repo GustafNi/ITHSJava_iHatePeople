@@ -5,7 +5,7 @@ import { SSL_OP_ALL } from 'constants';
 import currencySelect from './currencySelect.jsx'
 /* lägg form i hela */
 
-const key = 'key'
+const key = 'S2Q8spaR'
 
 class MainContent extends Component {
   constructor(props) {
@@ -20,8 +20,7 @@ class MainContent extends Component {
       apiResult: null,
       visibility: false,
       placesOutward: [],
-      placesReturn: [],
-      stopIndex: 0
+      placesReturn: []
     }
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
    
@@ -140,37 +139,49 @@ class MainContent extends Component {
     }
 
   }
-  placeName() {
-
-    this.state.places((place, i) => {
-      if (this.state.stopIndex === i) {
-        return <p>{place.shortName}</p>
+  placeName(index) {
+    let ind = index
+    let place = this.state.placesOutward.map((place, i) =>{
+      if(ind === i){
+        return place.shortName
       }
-    })
+    }
+    )
+     return place  
+  }
+
+  getStops(segment,index){
+    let stops = segment.stops
+    let stops2 = stops && stops.map((stop, index)=>
+    <section key={`${index}-react-key`}>
+      {this.images(index)}
+    <p>Stop {index+1}: {this.placeName(stop.place)}</p>
+</section>
+    )
+    
+    return stops2
+  }
+
+  getPrices(route){
+    let indicativePrice = route.indicativePrices
+    let prices = indicativePrice && indicativePrice.map((price, index) =>
+      <section key={`${index}-react-key`}>
+        <h5>{price.name}</h5>
+        <p>{price.priceLow} - {price.priceHigh} {price.currency}</p>
+      </section>
+    )
+    return prices
   }
 
   render() {
     const routes = this.state.routes.length
       ? this.state.routes.map((route, i) => {
-        let indicativePrice = route.indicativePrices
-        let prices = indicativePrice && indicativePrice.map((price, index) =>
-          <section key={`${index}-react-key`}>
-            <h5>{price.name}</h5>
-            <p>{price.priceLow} - {price.priceHigh} {price.currency}</p>
-          </section>
-        )
+        
 
         let segments = route.segments
         let segments2 = segments && segments.map((segment, index) =>
-          this.images(segment.vehicle)
-          /*
-         let stops = segment.stops
-         let stops2 = stops && stops.map((stop, index)=>
-             
-             <section key={`${index}-react-key`}>
-             <h5>{stop.place}</h5>
-         </section>
-             )*/
+          this.getStops(segment,index)
+          
         )
 
 
@@ -181,15 +192,15 @@ class MainContent extends Component {
           <section key={`${i}-react-key`}>
 
             <div className="resaultBox">
-              {segments2}
-              <h3>Stops</h3>
-
-              <h3>{route.name}</h3>
+            <h3>{route.name}</h3>
               <p>Distance in km: {route.distance}</p>
               <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
               <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
-              {prices}
-              {console.log(route.name)}
+              <h3>Stops:</h3>
+              {segments2}
+              <h3>Prices:</h3>
+              {this.getPrices(route)}
+              
             </div>
 
           </section>
@@ -199,27 +210,10 @@ class MainContent extends Component {
       : null
     const routes2 = this.state.routes2.length
       ? this.state.routes2.map((route, i) => {
-        let indicativePrice = route.indicativePrices
-        let prices = indicativePrice && indicativePrice.map((price, index) =>
-          <section key={`${index}-react-key`}>
 
-            <h5>{price.name}</h5>
-
-            <p>{price.priceLow} - {price.priceHigh} {price.currency}</p>
-
-          </section>
-        )
         let segments = route.segments
         let segments2 = segments && segments.map((segment, index) =>
           this.images(segment.vehicle)
-          /*
-         let stops = segment.stops
-         let stops2 = stops && stops.map((stop, index)=>
-             
-             <section key={`${index}-react-key`}>
-             <h5>{stop.place}</h5>
-         </section>
-             )*/
         )
         return (
 
@@ -231,8 +225,8 @@ class MainContent extends Component {
               <p>Distance in km: {route.distance}</p>
               <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
               <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
-              {prices}
-              {console.log(route.name)}
+              {this.getPrices(route)}
+              
             </div>
 
           </section>
