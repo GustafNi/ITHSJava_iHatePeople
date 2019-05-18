@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import "./mainContent.css"
 import train from '../img/train.png'
+import bus from '../img/bus.png'
+import walk from '../img/walk.png'
+import car from '../img/car.png'
+import taxi from '../img/taxi.png'
 import { SSL_OP_ALL } from 'constants';
 import currencySelect from './currencySelect.jsx'
 /* lägg form i hela */
@@ -20,13 +24,15 @@ class MainContent extends Component {
       apiResult: null,
       visibility: false,
       placesOutward: [],
-      placesReturn: []
+      placesReturn: [],
+      vehicleOutward: [],
+      vehicleReturn: []
     }
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
-   
+
   }
 
- 
+
 
   handleSearchSubmit = event => {
     event.preventDefault()
@@ -42,6 +48,10 @@ class MainContent extends Component {
         let placesOutward = data.places
         this.setState({
           placesOutward
+        })
+        let vehicleOutward = data.vehicles
+        this.setState({
+          vehicleOutward
         })
 
 
@@ -64,6 +74,10 @@ class MainContent extends Component {
         let placesReturn = data.places
         this.setState({
           placesReturn
+        })
+        let vehicleReturn = data.vehicles
+        this.setState({
+          vehicleReturn
         })
 
 
@@ -88,18 +102,18 @@ class MainContent extends Component {
 
   currencySelect() {
     return (
-        <div>
-            <p>Currency</p>
-            <select onChange={e => this.setState({ currency: e.target.value })}>
-                <option value='USD'>USD</option>
-                <option value="EUR">EUR</option>
-                <option value="SEK">SEK</option>
-            </select>
-        </div>
+      <div>
+        <p>Currency</p>
+        <select onChange={e => this.setState({ currency: e.target.value })}>
+          <option value='USD'>USD</option>
+          <option value="EUR">EUR</option>
+          <option value="SEK">SEK</option>
+        </select>
+      </div>
     )
-}
+  }
   what() {
-    
+
     return (
       <div className="what">
         {this.currencySelect()}
@@ -133,36 +147,51 @@ class MainContent extends Component {
   }
   images(index) {
     let ind = index
-    let img = null
-    if (ind === 0) {
-      return <img className="vehicle" src={train} alt="TrainIcon" />
-    }
-
+    let img = this.state.vehicleOutward.map((vehicle, i) => {
+      if (ind === i) {
+        if(vehicle.kind==="train"){
+          return <img className="vehicle" src={train} alt="TrainIcon" />
+        }
+        if(vehicle.kind==="foot"){
+          return <img className="vehicle" src={walk} alt="TrainIcon" />
+        }
+        if(vehicle.kind==="bus"){
+          return <img className="vehicle" src={bus} alt="TrainIcon" />
+        }
+        if(vehicle.kind==="taxi"){
+          return <img className="vehicle" src={taxi} alt="TrainIcon" />
+        }
+        if(vehicle.kind==="car"){
+          return <img className="vehicle" src={car} alt="TrainIcon" />
+        } 
+      }
+    })
+    return img
   }
   placeName(index) {
     let ind = index
-    let place = this.state.placesOutward.map((place, i) =>{
-      if(ind === i){
+    let place = this.state.placesOutward.map((place, i) => {
+      if (ind === i) {
         return place.shortName
       }
     }
     )
-     return place  
+    return place
   }
 
-  getStops(segment,index){
+  getStops(segment) {
     let stops = segment.stops
-    let stops2 = stops && stops.map((stop, index)=>
-    <section key={`${index}-react-key`}>
-      {this.images(index)}
-    <p>Stop {index+1}: {this.placeName(stop.place)}</p>
-</section>
+
+    let stops2 = stops && stops.map((stop, index) =>
+      <section key={`${index}-react-key`}>
+        <p>Stop {index + 1}: {this.placeName(stop.place)}</p>
+      </section>
     )
-    
+
     return stops2
   }
 
-  getPrices(route){
+  getPrices(route) {
     let indicativePrice = route.indicativePrices
     let prices = indicativePrice && indicativePrice.map((price, index) =>
       <section key={`${index}-react-key`}>
@@ -173,16 +202,26 @@ class MainContent extends Component {
     return prices
   }
 
+  getSegments(route) {
+    let segments = route.segments
+    let segments2 = segments.map((segment, index) => 
+        <section key={`${index}-react-key`}>
+          <div className="resaultBox">
+            {this.images(segment.vehicle)}
+            {this.getStops(segment)}
+          </div>
+        </section>
+    )
+    return segments2
+  }
+
   render() {
     const routes = this.state.routes.length
       ? this.state.routes.map((route, i) => {
-        
 
-        let segments = route.segments
-        let segments2 = segments && segments.map((segment, index) =>
-          this.getStops(segment,index)
-          
-        )
+
+       
+
 
 
 
@@ -192,15 +231,15 @@ class MainContent extends Component {
           <section key={`${i}-react-key`}>
 
             <div className="resaultBox">
-            <h3>{route.name}</h3>
+              <h3>{route.name}</h3>
               <p>Distance in km: {route.distance}</p>
               <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
               <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
               <h3>Stops:</h3>
-              {segments2}
+              {this.getSegments(route)}
               <h3>Prices:</h3>
               {this.getPrices(route)}
-              
+
             </div>
 
           </section>
@@ -220,13 +259,13 @@ class MainContent extends Component {
           <section key={`${i}-react-key`}>
 
             <div className="resaultBox">
-            {segments2}
+              {segments2}
               <h3>{route.name}</h3>
               <p>Distance in km: {route.distance}</p>
               <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
               <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
               {this.getPrices(route)}
-              
+
             </div>
 
           </section>
@@ -237,7 +276,7 @@ class MainContent extends Component {
     return (
 
       <main className="mainContentInnerGrid">
-      
+
         {this.what()}
 
         <div className="how">
