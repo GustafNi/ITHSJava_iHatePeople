@@ -246,6 +246,7 @@ class MainContent extends Component {
       ? this.state.routes2.map((route, i) => {
         const vehicleType = this.state.vehicleReturn
         const placeType = this.state.placesReturn
+        if(route.name!=="Drive"){
         return (
  <section key={`${i}-react-key`}>
 
@@ -261,6 +262,7 @@ class MainContent extends Component {
             </div>
           </section>
         )
+        }
       })
       : null
       return routes
