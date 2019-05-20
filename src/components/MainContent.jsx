@@ -9,7 +9,7 @@ import { SSL_OP_ALL } from 'constants';
 import currencySelect from './currencySelect.jsx'
 /* lägg form i hela */
 
-const key = 'S2Q8spaR'
+const key = 'key'
 
 class MainContent extends Component {
   constructor(props) {
@@ -218,13 +218,6 @@ class MainContent extends Component {
   render() {
     const routes = this.state.routes.length
       ? this.state.routes.map((route, i) => {
-
-
-       
-
-
-
-
 
         return (
 

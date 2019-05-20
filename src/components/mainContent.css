@@ -16,6 +16,10 @@
     
 }
 
+#hidden2{
+    display: none
+}
+
 .mainContent{
     background: violet;
 }
