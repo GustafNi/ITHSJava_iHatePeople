@@ -32,9 +32,6 @@ class MainContent extends Component {
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
 
   }
-
-
-
   handleSearchSubmit = event => {
     event.preventDefault()
 
@@ -221,24 +218,27 @@ class MainContent extends Component {
       ? this.state.routes.map((route, i) => {
         const vehicleType = this.state.vehicleOutward
         const placeType = this.state.placesOutward
-        return (
-          <section key={`${i}-react-key`}>
-
-            <div className="resaultBox">
-              <h3>{route.name}</h3>
-              <p>Distance in km: {route.distance}</p>
-              <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
-              <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
-              <h3>Stops:</h3>
-              {this.getSegments(route,vehicleType,placeType)}
-              <h3>Prices:</h3>
-              {this.getPrices(route)}
-            </div>
-          </section>
-
-        )
+        if(route.name!=="Drive"){
+          return (
+            <section key={`${i}-react-key`}>
+              <div className="resaultBox">
+                <h3>{route.name}</h3>
+                <p>Distance in km: {route.distance}</p>
+                <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
+                <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
+                <h3>Stops:</h3>
+                {this.getSegments(route,vehicleType,placeType)}
+                <h3>Prices:</h3>
+                {this.getPrices(route)}
+              </div>
+            </section>
+  
+          )
+        }
+        
       })
       : null
+      
       return routes
   }
   routeReturn(){
@@ -269,24 +269,18 @@ class MainContent extends Component {
   render() {
     const routesOutward = this.routeOutward()
     const routesReturn = this.routeReturn()
-    
     return (
 
       <main className="mainContentInnerGrid">
-
         {this.what()}
-
         <div className="how">
           <div><h1 id="how"></h1>{routesOutward}</div>
           {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}
         </div>
-
-
       </main>
     );
 
   }
-
 }
 
 export default MainContent
