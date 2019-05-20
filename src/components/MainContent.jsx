@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import "./mainContent.css"
 import train from '../img/train.png'
@@ -5,12 +6,12 @@ import bus from '../img/bus.png'
 import walk from '../img/walk.png'
 import car from '../img/car.png'
 import taxi from '../img/taxi.png'
-import { SSL_OP_ALL } from 'constants';
-import currencySelect from './currencySelect.jsx'
+require('dotenv').config();
+console.log(process.env);
 /* lägg form i hela */
 
-const key = 'key'
-
+//const key = process.env.REACT_ROME_2_RIO_KEY
+const key = "key"
 class MainContent extends Component {
   constructor(props) {
     super(props)
@@ -145,9 +146,9 @@ class MainContent extends Component {
       </div>
     )
   }
-  images(index) {
+  images(index, vehicleType) {
     let ind = index
-    let img = this.state.vehicleOutward.map((vehicle, i) => {
+    let img = vehicleType.map((vehicle, i) => {
       if (ind === i) {
         if(vehicle.kind==="train"){
           return <img className="vehicle" src={train} alt="TrainIcon" />
@@ -168,9 +169,9 @@ class MainContent extends Component {
     })
     return img
   }
-  placeName(index) {
+  placeName(index,placeType) {
     let ind = index
-    let place = this.state.placesOutward.map((place, i) => {
+    let place = placeType.map((place, i) => {
       if (ind === i) {
         return place.shortName
       }
@@ -179,12 +180,12 @@ class MainContent extends Component {
     return place
   }
 
-  getStops(segment) {
+  getStops(segment, placeType) {
     let stops = segment.stops
 
     let stops2 = stops && stops.map((stop, index) =>
       <section key={`${index}-react-key`}>
-        <p>Stop {index + 1}: {this.placeName(stop.place)}</p>
+        <p>Stop {index + 1}: {this.placeName(stop.place,placeType)}</p>
       </section>
     )
 
@@ -202,13 +203,13 @@ class MainContent extends Component {
     return prices
   }
 
-  getSegments(route) {
+  getSegments(route, vehicleType,placeType) {
     let segments = route.segments
     let segments2 = segments.map((segment, index) => 
         <section key={`${index}-react-key`}>
           <div className="resaultBox">
-            {this.images(segment.vehicle)}
-            {this.getStops(segment)}
+            {this.images(segment.vehicle, vehicleType)}
+            {this.getStops(segment,placeType)}
           </div>
         </section>
     )
@@ -218,9 +219,9 @@ class MainContent extends Component {
   render() {
     const routes = this.state.routes.length
       ? this.state.routes.map((route, i) => {
-
+        const vehicleType = this.state.vehicleOutward
+        const placeType = this.state.placesOutward
         return (
-
           <section key={`${i}-react-key`}>
 
             <div className="resaultBox">
@@ -229,12 +230,10 @@ class MainContent extends Component {
               <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
               <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
               <h3>Stops:</h3>
-              {this.getSegments(route)}
+              {this.getSegments(route,vehicleType,placeType)}
               <h3>Prices:</h3>
               {this.getPrices(route)}
-
             </div>
-
           </section>
 
         )
@@ -242,27 +241,22 @@ class MainContent extends Component {
       : null
     const routes2 = this.state.routes2.length
       ? this.state.routes2.map((route, i) => {
-
-        let segments = route.segments
-        let segments2 = segments && segments.map((segment, index) =>
-          this.images(segment.vehicle)
-        )
+        const vehicleType = this.state.vehicleReturn
+        const placeType = this.state.placesReturn
         return (
-
-          <section key={`${i}-react-key`}>
+ <section key={`${i}-react-key`}>
 
             <div className="resaultBox">
-              {segments2}
               <h3>{route.name}</h3>
               <p>Distance in km: {route.distance}</p>
               <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
               <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
+              <h3>Stops:</h3>
+              {this.getSegments(route,vehicleType,placeType)}
+              <h3>Prices:</h3>
               {this.getPrices(route)}
-
             </div>
-
           </section>
-
         )
       })
       : null
