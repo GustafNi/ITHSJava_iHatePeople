@@ -11,7 +11,7 @@ console.log(process.env);
 /* lägg form i hela */
 
 //const key = process.env.REACT_ROME_2_RIO_KEY
-const key = "key"
+const key = "S2Q8spaR"
 class MainContent extends Component {
   constructor(props) {
     super(props)
@@ -216,7 +216,7 @@ class MainContent extends Component {
     return segments2
   }
 
-  render() {
+  routeOutward(){
     const routes = this.state.routes.length
       ? this.state.routes.map((route, i) => {
         const vehicleType = this.state.vehicleOutward
@@ -239,7 +239,10 @@ class MainContent extends Component {
         )
       })
       : null
-    const routes2 = this.state.routes2.length
+      return routes
+  }
+  routeReturn(){
+    const routes = this.state.routes2.length
       ? this.state.routes2.map((route, i) => {
         const vehicleType = this.state.vehicleReturn
         const placeType = this.state.placesReturn
@@ -260,6 +263,13 @@ class MainContent extends Component {
         )
       })
       : null
+      return routes
+  }
+
+  render() {
+    const routesOutward = this.routeOutward()
+    const routesReturn = this.routeReturn()
+    
     return (
 
       <main className="mainContentInnerGrid">
@@ -267,8 +277,8 @@ class MainContent extends Component {
         {this.what()}
 
         <div className="how">
-          <div><h1 id="how"></h1>{routes}</div>
-          {this.state.visibility && <div><h1>Return trip</h1>{routes2}</div>}
+          <div><h1 id="how"></h1>{routesOutward}</div>
+          {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}
         </div>
 
 
