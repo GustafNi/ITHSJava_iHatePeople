@@ -1,0 +1,44 @@
+@import url("../pages/Home.css");
+
+
+.mainContentInnerGrid{
+    height: 100%;
+    width:100%;
+    display: grid;
+    grid-template-columns: repeat(2, 4fr);
+    grid-template-rows: repeat(2, 2fr);
+    grid-template-areas: "what how" "when were";
+    
+
+}
+.vehicle{
+    height: 50px;
+    
+}
+
+.mainContent{
+    background: violet;
+}
+
+.how{
+    grid-area:how;
+    display: flex;
+   
+    width: 100%;
+}
+
+.resaultBox{
+    grid-area: main;
+    background-color: aqua;
+    justify-content: space-between;
+    border-block-end-color: azure;
+
+}
+
+.what{
+    grid-area: what;
+    height: 500px;
+    width: 100%;
+}
+
+
