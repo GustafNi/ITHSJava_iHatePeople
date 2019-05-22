@@ -145,22 +145,22 @@ class MainContent extends Component {
   }
   images(index, vehicleType) {
     let ind = index
-    let img = vehicleType.map((vehicle, i) => {
-      if (ind === i) {
+    let img = vehicleType.map((vehicle, indexVehicle) => {
+      if (ind === indexVehicle) {
         if(vehicle.kind==="train"){
-          return <img className="vehicle" src={train} alt="TrainIcon" />
+          return <img key={indexVehicle} className="vehicle" src={train} alt="TrainIcon" />
         }
         if(vehicle.kind==="foot"){
-          return <img className="vehicle" src={walk} alt="TrainIcon" />
+          return <img key={indexVehicle} className="vehicle" src={walk} alt="TrainIcon" />
         }
         if(vehicle.kind==="bus"){
-          return <img className="vehicle" src={bus} alt="TrainIcon" />
+          return <img key={indexVehicle} className="vehicle" src={bus} alt="TrainIcon" />
         }
         if(vehicle.kind==="taxi"){
-          return <img className="vehicle" src={taxi} alt="TrainIcon" />
+          return <img key={indexVehicle} className="vehicle" src={taxi} alt="TrainIcon" />
         }
         if(vehicle.kind==="car"){
-          return <img className="vehicle" src={car} alt="TrainIcon" />
+          return <img key={indexVehicle} className="vehicle" src={car} alt="TrainIcon" />
         } 
       }
     })
@@ -168,8 +168,8 @@ class MainContent extends Component {
   }
   placeName(index,placeType) {
     let ind = index
-    let place = placeType.map((place, i) => {
-      if (ind === i) {
+    let place = placeType.map((place, indexPlace) => {
+      if (ind === indexPlace) {
         return place.shortName
       }
     }
@@ -180,9 +180,9 @@ class MainContent extends Component {
   getStops(segment, placeType) {
     let stops = segment.stops
 
-    let stops2 = stops && stops.map((stop, index) =>
-      <section key={`${index}-react-key`}>
-        <p>Stop {index + 1}: {this.placeName(stop.place,placeType)}</p>
+    let stops2 = stops && stops.map((stop, indexStops) =>
+      <section key={indexStops}>
+        <p>Stop {indexStops + 1}: {this.placeName(stop.place,placeType)}</p>
       </section>
     )
 
@@ -190,9 +190,9 @@ class MainContent extends Component {
   }
 
   getPrices(route) {
-    let indicativePrice = route.indicativePrices
-    let prices = indicativePrice && indicativePrice.map((price, index) =>
-      <section key={`${index}-react-key`}>
+    let indicativePrices = route.indicativePrices
+    let prices = indicativePrices && indicativePrices.map((price, indexPrices) =>
+      <section key={indexPrices}>
         <h5>{price.name}</h5>
         <p>{price.priceLow} - {price.priceHigh} {price.currency}</p>
       </section>
@@ -202,8 +202,8 @@ class MainContent extends Component {
 
   getSegments(route, vehicleType,placeType) {
     let segments = route.segments
-    let segments2 = segments.map((segment, index) => 
-        <section key={`${index}-react-key`}>
+    let segments2 = segments.map((segment, indexSegment) => 
+        <section key={indexSegment}>
           <div className="resaultBox">
             {this.images(segment.vehicle, vehicleType)}
             {this.getStops(segment,placeType)}
@@ -215,12 +215,12 @@ class MainContent extends Component {
 
   routeOutward(){
     const routes = this.state.routes.length
-      ? this.state.routes.map((route, i) => {
+      ? this.state.routes.map((route, indexRouteO) => {
         const vehicleType = this.state.vehicleOutward
         const placeType = this.state.placesOutward
-        if(route.name!=="Drive"){
+        
           return (
-            <section key={`${i}-react-key`}>
+            <section key={indexRouteO}>
               <div className="resaultBox">
                 <h3>{route.name}</h3>
                 <p>Distance in km: {route.distance}</p>
@@ -234,7 +234,7 @@ class MainContent extends Component {
             </section>
   
           )
-        }
+        
         
       })
       : null
@@ -243,12 +243,12 @@ class MainContent extends Component {
   }
   routeReturn(){
     const routes = this.state.routes2.length
-      ? this.state.routes2.map((route, i) => {
+      ? this.state.routes2.map((route, indexRouteR) => {
         const vehicleType = this.state.vehicleReturn
         const placeType = this.state.placesReturn
-        if(route.name!=="Drive"){
+        
         return (
- <section key={`${i}-react-key`}>
+ <section key={indexRouteR}>
 
             <div className="resaultBox">
               <h3>{route.name}</h3>
@@ -262,7 +262,7 @@ class MainContent extends Component {
             </div>
           </section>
         )
-        }
+        
       })
       : null
       return routes
