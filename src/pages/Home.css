@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* first media 680*/
 
 .grid-container {
@@ -39,3 +40,46 @@
     
 }
 
+=======
+/* first media 680*/
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: 500px auto 100px;
+    grid-template-areas: "header header header" "main main main" "footer footer footer";
+}
+
+.headerContentOuterGrid{
+    grid-area: header;
+    background-image: url("../img/olympic-png-olympic-rings-high-quality-png-532.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    
+  }
+  
+
+
+.mainContentOuterGrid {
+    grid-area: main;
+    width: 100%;
+    height: 100%;
+    
+   
+    
+}
+
+.footerContent {
+    grid-area: footer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../img/output-onlinepngtools.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    
+    
+}
+
+>>>>>>> d02f31246129d279738c3559f9ef1e595d380191
