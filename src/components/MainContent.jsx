@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import "./mainContent.css"
 import train from '../img/train.png'
-import { SSL_OP_ALL } from 'constants';
-import currencySelect from './currencySelect.jsx'
+import bus from '../img/bus.png'
+import walk from '../img/walk.png'
+import car from '../img/car.png'
+import taxi from '../img/taxi.png'
+require('dotenv').config();
+console.log(process.env);
 /* lägg form i hela */
 
-const key = 'key'
-
+const key = process.env.REACT_APP_ROME_2_RIO_KEY
 class MainContent extends Component {
   constructor(props) {
     super(props)
@@ -21,14 +24,12 @@ class MainContent extends Component {
       visibility: false,
       placesOutward: [],
       placesReturn: [],
-      stopIndex: 0
+      vehicleOutward: [],
+      vehicleReturn: []
     }
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
-   
+
   }
-
- 
-
   handleSearchSubmit = event => {
     event.preventDefault()
 
@@ -43,6 +44,10 @@ class MainContent extends Component {
         let placesOutward = data.places
         this.setState({
           placesOutward
+        })
+        let vehicleOutward = data.vehicles
+        this.setState({
+          vehicleOutward
         })
 
 
@@ -65,6 +70,10 @@ class MainContent extends Component {
         let placesReturn = data.places
         this.setState({
           placesReturn
+        })
+        let vehicleReturn = data.vehicles
+        this.setState({
+          vehicleReturn
         })
 
 
@@ -89,18 +98,18 @@ class MainContent extends Component {
 
   currencySelect() {
     return (
-        <div>
-            <p>Currency</p>
-            <select onChange={e => this.setState({ currency: e.target.value })}>
-                <option value='USD'>USD</option>
-                <option value="EUR">EUR</option>
-                <option value="SEK">SEK</option>
-            </select>
-        </div>
+      <div>
+        <p>Currency</p>
+        <select onChange={e => this.setState({ currency: e.target.value })}>
+          <option value='USD'>USD</option>
+          <option value="EUR">EUR</option>
+          <option value="SEK">SEK</option>
+        </select>
+      </div>
     )
-}
+  }
   what() {
-    
+
     return (
       <div className="what">
         {this.currencySelect()}
@@ -132,131 +141,148 @@ class MainContent extends Component {
       </div>
     )
   }
-  images(index) {
+  images(index, vehicleType) {
     let ind = index
-    let img = null
-    if (ind === 0) {
-      return <img className="vehicle" src={train} alt="TrainIcon" />
-    }
-
-  }
-  placeName() {
-
-    this.state.places((place, i) => {
-      if (this.state.stopIndex === i) {
-        return <p>{place.shortName}</p>
+    let img = vehicleType.map((vehicle, indexVehicle) => {
+      if (ind === indexVehicle) {
+        if(vehicle.kind==="train"){
+          return <img key={indexVehicle} className="vehicle" src={train} alt="TrainIcon" />
+        }
+        if(vehicle.kind==="foot"){
+          return <img key={indexVehicle} className="vehicle" src={walk} alt="TrainIcon" />
+        }
+        if(vehicle.kind==="bus"){
+          return <img key={indexVehicle} className="vehicle" src={bus} alt="TrainIcon" />
+        }
+        if(vehicle.kind==="taxi"){
+          return <img key={indexVehicle} className="vehicle" src={taxi} alt="TrainIcon" />
+        }
+        if(vehicle.kind==="car"){
+          return <img key={indexVehicle} className="vehicle" src={car} alt="TrainIcon" />
+        } 
       }
     })
+    return img
+  }
+  
+  
+  placeName(index,placeType) {
+    let ind = index
+    let place = placeType.map((place, indexPlace) => {
+      if (ind === indexPlace) {
+        return place.shortName
+      }
+    }
+    )
+    return place
+  }
+
+  getStops(segment, placeType) {
+    let stops = segment.stops
+
+    let stops2 = stops && stops.map((stop, indexStops) =>
+      <section key={indexStops}>
+        <p>Stop {indexStops + 1}: {this.placeName(stop.place,placeType)}</p>
+      </section>
+    )
+
+    return stops2
+  }
+
+  getPrices(route) {
+    let indicativePrices = route.indicativePrices
+    let prices = indicativePrices && indicativePrices.map((price, indexPrices) =>
+      <section key={indexPrices}>
+        <h5>{price.name}</h5>
+        <p>{price.priceLow} - {price.priceHigh} {price.currency}</p>
+      </section>
+    )
+    return prices
+  }
+
+  getSegments(route, vehicleType,placeType) {
+    let segments = route.segments
+    let segments2 = segments.map((segment, indexSegment) => 
+        <section key={indexSegment}>
+          <div className="resaultBox">
+            {this.images(segment.vehicle, vehicleType)}
+            {this.getStops(segment,placeType)}
+          </div>
+        </section>
+    )
+    return segments2
+  }
+
+  routeOutward(){
+    const routes = this.state.routes.length
+      ? this.state.routes.map((route, indexRouteO) => {
+        const vehicleType = this.state.vehicleOutward
+        const placeType = this.state.placesOutward
+        
+          return (
+            <section key={indexRouteO}>
+              <div className="resaultBox">
+                <h3>{route.name}</h3>
+                <p>Distance in km: {route.distance}</p>
+                <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
+                <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
+                <h3>Stops:</h3>
+                {this.getSegments(route,vehicleType,placeType)}
+                <h3>Prices:</h3>
+                {this.getPrices(route)}
+              </div>
+            </section>
+  
+          )
+        
+        
+      })
+      : null
+      
+      return routes
+  }
+  routeReturn(){
+    const routes = this.state.routes2.length
+      ? this.state.routes2.map((route, indexRouteR) => {
+        const vehicleType = this.state.vehicleReturn
+        const placeType = this.state.placesReturn
+        
+        return (
+ <section key={indexRouteR}>
+
+            <div className="resaultBox">
+              <h3>{route.name}</h3>
+              <p>Distance in km: {route.distance}</p>
+              <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
+              <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
+              <h3>Stops:</h3>
+              {this.getSegments(route,vehicleType,placeType)}
+              <h3>Prices:</h3>
+              {this.getPrices(route)}
+            </div>
+          </section>
+        )
+        
+      })
+      : null
+      return routes
   }
 
   render() {
-    const routes = this.state.routes.length
-      ? this.state.routes.map((route, i) => {
-        let indicativePrice = route.indicativePrices
-        let prices = indicativePrice && indicativePrice.map((price, index) =>
-          <section key={`${index}-react-key`}>
-            <h5>{price.name}</h5>
-            <p>{price.priceLow} - {price.priceHigh} {price.currency}</p>
-          </section>
-        )
-
-        let segments = route.segments
-        let segments2 = segments && segments.map((segment, index) =>
-          this.images(segment.vehicle)
-          /*
-         let stops = segment.stops
-         let stops2 = stops && stops.map((stop, index)=>
-             
-             <section key={`${index}-react-key`}>
-             <h5>{stop.place}</h5>
-         </section>
-             )*/
-        )
-
-
-
-
-        return (
-
-          <section key={`${i}-react-key`}>
-
-            <div className="resaultBox">
-              {segments2}
-              <h3>Stops</h3>
-
-              <h3>{route.name}</h3>
-              <p>Distance in km: {route.distance}</p>
-              <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
-              <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
-              {prices}
-              {console.log(route.name)}
-            </div>
-
-          </section>
-
-        )
-      })
-      : null
-    const routes2 = this.state.routes2.length
-      ? this.state.routes2.map((route, i) => {
-        let indicativePrice = route.indicativePrices
-        let prices = indicativePrice && indicativePrice.map((price, index) =>
-          <section key={`${index}-react-key`}>
-
-            <h5>{price.name}</h5>
-
-            <p>{price.priceLow} - {price.priceHigh} {price.currency}</p>
-
-          </section>
-        )
-        let segments = route.segments
-        let segments2 = segments && segments.map((segment, index) =>
-          this.images(segment.vehicle)
-          /*
-         let stops = segment.stops
-         let stops2 = stops && stops.map((stop, index)=>
-             
-             <section key={`${index}-react-key`}>
-             <h5>{stop.place}</h5>
-         </section>
-             )*/
-        )
-        return (
-
-          <section key={`${i}-react-key`}>
-
-            <div className="resaultBox">
-            {segments2}
-              <h3>{route.name}</h3>
-              <p>Distance in km: {route.distance}</p>
-              <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
-              <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
-              {prices}
-              {console.log(route.name)}
-            </div>
-
-          </section>
-
-        )
-      })
-      : null
+    const routesOutward = this.routeOutward()
+    const routesReturn = this.routeReturn()
     return (
 
       <main className="mainContentInnerGrid">
-      
         {this.what()}
-
         <div className="how">
-          <div><h1 id="how"></h1>{routes}</div>
-          {this.state.visibility && <div><h1>Return trip</h1>{routes2}</div>}
+          <div><h1 id="how"></h1>{routesOutward}</div>
+          {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}
         </div>
-
-
       </main>
     );
 
   }
-
 }
 
 export default MainContent
