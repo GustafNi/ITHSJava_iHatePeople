@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "./mainContent.css"
+import Maps from './Maps.jsx'
 import train from '../img/train.png'
 import bus from '../img/bus.png'
 import walk from '../img/walk.png'
@@ -41,6 +42,7 @@ class MainContent extends Component {
         this.setState({
           routes
         })
+        
         let placesOutward = data.places
         this.setState({
           placesOutward
@@ -49,10 +51,12 @@ class MainContent extends Component {
         this.setState({
           vehicleOutward
         })
+        
 
 
         console.log(routes)
         console.log(placesOutward)
+      
       })
       .catch(err =>
         this.setState({
@@ -113,7 +117,7 @@ class MainContent extends Component {
     return (
       <div className="what">
         {this.currencySelect()}
-        <h1>what</h1>
+        <h1></h1>
 
         <form onSubmit={this.handleSearchSubmit}>
           <label>
@@ -164,6 +168,8 @@ class MainContent extends Component {
     })
     return img
   }
+
+ 
   
   
   placeName(index,placeType) {
@@ -200,9 +206,8 @@ class MainContent extends Component {
     return prices
   }
 
-  getSegments(route, vehicleType,placeType) {
-    let segments = route.segments
-    let segments2 = segments.map((segment, indexSegment) => 
+  getSegments(route, vehicleType,placeType) {    
+    let segments = route.segments.map((segment, indexSegment) => 
         <section key={indexSegment}>
           <div className="resaultBox">
             {this.images(segment.vehicle, vehicleType)}
@@ -210,7 +215,7 @@ class MainContent extends Component {
           </div>
         </section>
     )
-    return segments2
+    return segments
   }
 
   routeOutward(){
@@ -229,7 +234,10 @@ class MainContent extends Component {
                 <h3>Stops:</h3>
                 {this.getSegments(route,vehicleType,placeType)}
                 <h3>Prices:</h3>
-                {this.getPrices(route)}
+                {this.getPrices(route)}   
+                <Maps children = {route.segments}/>            
+                 {/* <Maps routes={this.state.routes}/>  */}
+                {/* <Maps lat={this.placeLat(route.depPlace,placeType)} lng={this.placeLng(route.depPlace,placeType)}/> */}
               </div>
             </section>
   
@@ -277,9 +285,14 @@ class MainContent extends Component {
         {this.what()}
         <div className="how">
           <div><h1 id="how"></h1>{routesOutward}</div>
-          {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}
+          {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}          
         </div>
       </main>
+      
+        
+
+     
+      
     );
 
   }
