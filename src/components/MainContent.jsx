@@ -5,6 +5,7 @@ import bus from '../img/bus.png'
 import walk from '../img/walk.png'
 import car from '../img/car.png'
 import taxi from '../img/taxi.png'
+import Maps from './Maps.jsx'
 require('dotenv').config();
 console.log(process.env);
 /* lägg form i hela */
@@ -25,11 +26,13 @@ class MainContent extends Component {
       placesOutward: [],
       placesReturn: [],
       vehicleOutward: [],
-      vehicleReturn: []
+      vehicleReturn: [],
+      expandedRows: []
     }
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
 
   }
+
   handleSearchSubmit = event => {
     event.preventDefault()
 
@@ -177,6 +180,7 @@ class MainContent extends Component {
     return place
   }
 
+
   getStops(segment, placeType) {
     let stops = segment.stops
 
@@ -190,19 +194,32 @@ class MainContent extends Component {
   }
 
   getPrices(route) {
-    let indicativePrices = route.indicativePrices
-    let prices = indicativePrices && indicativePrices.map((price, indexPrices) =>
-      <section key={indexPrices}>
-        <h5>{price.name}</h5>
-        <p>{price.priceLow} - {price.priceHigh} {price.currency}</p>
-      </section>
+    let prices = route.indicativePrices && route.indicativePrices.map((price, indexPrices) =>{
+      if(price.priceLow===undefined){
+        return(
+          <section key={indexPrices}>
+          <h5>{price.name}</h5>
+          <p>{price.price} {price.currency}</p>
+          
+        </section>
+        )
+      }
+      else{
+        return(
+          <section key={indexPrices}>
+          <h5>{price.name}</h5>
+          <p>{price.priceLow} - {price.priceHigh} {price.currency}</p>
+        </section>
+        )
+      }
+      
+    }
     )
     return prices
   }
 
   getSegments(route, vehicleType,placeType) {
-    let segments = route.segments
-    let segments2 = segments.map((segment, indexSegment) => 
+    let segments = route.segments.map((segment, indexSegment) => 
         <section key={indexSegment}>
           <div className="resaultBox">
             {this.images(segment.vehicle, vehicleType)}
@@ -210,9 +227,34 @@ class MainContent extends Component {
           </div>
         </section>
     )
-    return segments2
+    return segments
   }
 
+  routeOutwards(){
+    const routes = this.state.routes.length
+      ? this.state.routes.map((route, indexRouteO) => {
+        const vehicleType = this.state.vehicleOutward
+        const placeType = this.state.placesOutward
+          return (
+            <section key={indexRouteO}>
+              <div className="resaultBox">
+                <h3>{route.name}</h3>
+                <p>Distance in km: {route.distance}</p>
+                <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
+                <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
+                <h3>Stops:</h3>
+                {this.getSegments(route,vehicleType,placeType)}
+                <h3>Prices:</h3>
+                {this.getPrices(route)}
+                <Maps children ={route.segments}/>
+              </div>
+            </section>
+          )
+      })
+      : null
+      
+      return routes
+  }
   routeOutward(){
     const routes = this.state.routes.length
       ? this.state.routes.map((route, indexRouteO) => {
@@ -230,6 +272,7 @@ class MainContent extends Component {
                 {this.getSegments(route,vehicleType,placeType)}
                 <h3>Prices:</h3>
                 {this.getPrices(route)}
+                <Maps children ={route.segments}/>
               </div>
             </section>
   
@@ -253,12 +296,14 @@ class MainContent extends Component {
             <div className="resaultBox">
               <h3>{route.name}</h3>
               <p>Distance in km: {route.distance}</p>
+             
               <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
               <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
               <h3>Stops:</h3>
               {this.getSegments(route,vehicleType,placeType)}
               <h3>Prices:</h3>
               {this.getPrices(route)}
+              <Maps children ={route.segments}/>
             </div>
           </section>
         )
