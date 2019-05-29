@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import "./mainContent.css"
 import Maps from './Maps.jsx'
-import GetPrices from './functions/GetPrices.jsx'
-import GetSegments from './functions/GetSegments.jsx'
-import CurrencySelect from './functions/CurrencySelect.jsx'
-import ConvertTime from './functions/ConvertTime'
+import GetPrices from './function/GetPrices.jsx.js'
+import GetSegments from './function/GetSegments.jsx.js'
+import CurrencySelect from './function/CurrencySelect.jsx.js'
+import ConvertTime from './function/ConvertTime'
 require('dotenv').config();
 console.log(process.env);
 /* lägg form i hela */
