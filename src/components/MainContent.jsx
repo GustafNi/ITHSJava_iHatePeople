@@ -31,7 +31,7 @@ class MainContent extends Component {
 
   }
 
-  // Function running when Search button gets klicked//
+// Function running when Search button gets klicked
 // First the fetch request url gets the data from the api then converts it from jSon.
 // From there it adds the routes and places arrays into the state.
 // After that it reverts the values in the url to get the return trip info
@@ -106,7 +106,7 @@ class MainContent extends Component {
   }
   
   //Function to change the currency in the fetch request url
-  
+
   currencySelect() {
     return (
       <div>
