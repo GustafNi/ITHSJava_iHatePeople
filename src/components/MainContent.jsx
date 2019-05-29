@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "./mainContent.css"
+import Maps from './Maps.jsx'
 import train from '../img/train.png'
 import bus from '../img/bus.png'
 import walk from '../img/walk.png'
@@ -30,62 +31,44 @@ class MainContent extends Component {
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
 
   }
-
-// Function running when Search button gets klicked
-// First the fetch request url gets the data from the api then converts it from jSon.
-// From there it adds the routes and places arrays into the state.
-// After that it reverts the values in the url to get the return trip info
-
   handleSearchSubmit = event => {
     event.preventDefault()
 
     fetch(`http://free.rome2rio.com/api/1.4/json/Search?key=${key}&oName=${this.state.fromValue}&dName=${this.state.toValue}&currencyCode=${this.state.currency}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        console.log("DataFetch1",data)
         let routes = data.routes
-        this.setState({
-          routes
-        })
         let placesOutward = data.places
-        this.setState({
-          placesOutward
-        })
         let vehicleOutward = data.vehicles
         this.setState({
+          routes,
+          placesOutward,
           vehicleOutward
-        })
-
-
-        console.log(routes)
-        console.log(placesOutward)
+        })          
+               
+      
       })
       .catch(err =>
         this.setState({
           errorMsg: err
         })
       )
-
     fetch(`http://free.rome2rio.com/api/1.4/json/Search?key=${key}&oName=${this.state.toValue}&dName=${this.state.fromValue}&currencyCode=${this.state.currency}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        console.log("DataFecth2", data)
         let routes2 = data.routes
-        this.setState({
-          routes2
-        })
         let placesReturn = data.places
-        this.setState({
-          placesReturn
-        })
         let vehicleReturn = data.vehicles
         this.setState({
+          routes2,
+          placesReturn,
           vehicleReturn
-        })
 
-
-
-        console.log(routes2)
+        })       
+        
+       
       })
       .catch(err =>
         this.setState({
@@ -94,10 +77,6 @@ class MainContent extends Component {
       )
     document.getElementById("how").innerHTML = "Outward trip"
   }
-
-  //Function to show travel time in hours and minutes
-
-
   handleChange = () => this.setState({ visibility: !this.state.visibility })
   convertMinsToHrsMins(mins) {
     let h = Math.floor(mins / 60);
@@ -106,15 +85,7 @@ class MainContent extends Component {
     m = m < 10 ? '0' + m : m;
     return `${h} h ${m} m`;
   }
-  
-  //Function to change the currency in the fetch request url
 
-
-  /***************************************************
-   
-      Knappen för välja valuta  
-   
-   *************************************************/
   currencySelect() {
     return (
       <div>
@@ -128,31 +99,24 @@ class MainContent extends Component {
     )
   }
   what() {
-/***************************************************
-   
-     Sökfunktion för resa
-   
-   *************************************************/
+
     return (
-      // change to section
       <div className="what">
         {this.currencySelect()}
-        <h1>what</h1>
-       
+        <h1></h1>
+
         <form onSubmit={this.handleSearchSubmit}>
           <label>
-            {/* Checkbox för om man vill göra en return trip från därifrån man reste */}
             <input type="checkbox"
               checked={this.state.visibility}
               onChange={this.handleChange}
             />
             Add return trip
        </label>
-          {/* Input text för vart man vill resa ifrån */}
           <p>What?</p>
           <input type='text' name='departureCity' placeholder='from?' onChange={e => this.setState({ fromValue: e.target.value })}></input>
 
-          {/* Lista från vart man kan resa till */}
+
           <p>Where?</p>
           <select onChange={e => this.setState({ toValue: e.target.value })}>
             <option placeholder='destination?'></option>
@@ -167,17 +131,6 @@ class MainContent extends Component {
       </div>
     )
   }
-
-  // Wrap the answer in a fitting element (not a div)
-=======
-
-/***************************************************
-   
-    Fordssymboler som visad vid vad för form av 
-    resefordon som används vid resa
-   
-***************************************************/
-
   images(index, vehicleType) {
     let ind = index
     let img = vehicleType.map((vehicle, indexVehicle) => {
@@ -201,6 +154,8 @@ class MainContent extends Component {
     })
     return img
   }
+
+ 
   
   
   placeName(index,placeType) {
@@ -216,11 +171,7 @@ class MainContent extends Component {
 
   getStops(segment, placeType) {
     let stops = segment.stops
-/***************************************************
-   
-      Skriver ut vilka stop som görs på resan
 
-***************************************************/
     let stops2 = stops && stops.map((stop, indexStops) =>
       <section key={indexStops}>
         <p>Stop {indexStops + 1}: {this.placeName(stop.place,placeType)}</p>
@@ -230,12 +181,6 @@ class MainContent extends Component {
     return stops2
   }
 
-
-/***************************************************
-   
-    Skriver ut lägsta och högsta pris i vald valuta
-     
-***************************************************/
   getPrices(route) {
     let indicativePrices = route.indicativePrices
     let prices = indicativePrices && indicativePrices.map((price, indexPrices) =>
@@ -247,15 +192,8 @@ class MainContent extends Component {
     return prices
   }
 
-
-/***************************************************
-   
-     Skriver resutlat med alla stop med fordonsbild
-     
-***************************************************/
-  getSegments(route, vehicleType,placeType) {
-    let segments = route.segments
-    let segments2 = segments.map((segment, indexSegment) => 
+  getSegments(route, vehicleType,placeType) {    
+    let segments = route.segments.map((segment, indexSegment) => 
         <section key={indexSegment}>
           <div className="resaultBox">
             {this.images(segment.vehicle, vehicleType)}
@@ -263,14 +201,9 @@ class MainContent extends Component {
           </div>
         </section>
     )
-    return segments2
+    return segments
   }
 
-/***************************************************
-   
-     Skriver ut resultat lista för utresa med information 
-     
-***************************************************/
   routeOutward(){
     const routes = this.state.routes.length
       ? this.state.routes.map((route, indexRouteO) => {
@@ -287,7 +220,9 @@ class MainContent extends Component {
                 <h3>Stops:</h3>
                 {this.getSegments(route,vehicleType,placeType)}
                 <h3>Prices:</h3>
-                {this.getPrices(route)}
+                {this.getPrices(route)}   
+                <Maps children = {route.segments} places={placeType}/>        
+              
               </div>
             </section>
   
@@ -299,20 +234,12 @@ class MainContent extends Component {
       
       return routes
   }
-
-
   routeReturn(){
     const routes = this.state.routes2.length
       ? this.state.routes2.map((route, indexRouteR) => {
         const vehicleType = this.state.vehicleReturn
         const placeType = this.state.placesReturn
-        
         return (
-/***************************************************
-   
-     Skriver ut Återresan med infromation
-     
-***************************************************/
  <section key={indexRouteR}>
 
             <div className="resaultBox">
@@ -324,6 +251,7 @@ class MainContent extends Component {
               {this.getSegments(route,vehicleType,placeType)}
               <h3>Prices:</h3>
               {this.getPrices(route)}
+              <Maps children = {route.segments} places={placeType}/>  
             </div>
           </section>
         )
@@ -338,19 +266,18 @@ class MainContent extends Component {
     const routesReturn = this.routeReturn()
     return (
 
-/***************************************************
-   
-     Knapp om man vill resa tillbaka eller inte.
-     
-***************************************************/
-      
       <main className="mainContentInnerGrid">
         {this.what()}
         <div className="how">
           <div><h1 id="how"></h1>{routesOutward}</div>
-          {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}
+          {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}          
         </div>
       </main>
+      
+        
+
+     
+      
     );
 
   }
