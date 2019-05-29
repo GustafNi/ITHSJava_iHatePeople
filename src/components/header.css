@@ -1,24 +1,4 @@
 
-  
-.headerContentInnerGrid{
-  height: 100%;
-  width:100%;
-  display: grid;
-  grid-template-columns: repeat(4, 2fr);
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-areas: ". . . socialLogo" ". . . ." " . . . ." "nav nav nav nav";
-
-}
-
-
-
-
-.nav-container{
-  grid-area: nav;
-  
-
-}
-
 .navbar{
   display: flex;
   justify-content: space-evenly;

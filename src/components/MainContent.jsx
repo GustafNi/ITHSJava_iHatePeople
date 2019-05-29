@@ -30,6 +30,12 @@ class MainContent extends Component {
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
 
   }
+
+// Function running when Search button gets klicked
+// First the fetch request url gets the data from the api then converts it from jSon.
+// From there it adds the routes and places arrays into the state.
+// After that it reverts the values in the url to get the return trip info
+
   handleSearchSubmit = event => {
     event.preventDefault()
 
@@ -89,6 +95,8 @@ class MainContent extends Component {
     document.getElementById("how").innerHTML = "Outward trip"
   }
 
+  //Function to show travel time in hours and minutes
+
 
   handleChange = () => this.setState({ visibility: !this.state.visibility })
   convertMinsToHrsMins(mins) {
@@ -98,6 +106,8 @@ class MainContent extends Component {
     m = m < 10 ? '0' + m : m;
     return `${h} h ${m} m`;
   }
+  
+  //Function to change the currency in the fetch request url
 
 
   /***************************************************
@@ -124,6 +134,7 @@ class MainContent extends Component {
    
    *************************************************/
     return (
+      // change to section
       <div className="what">
         {this.currencySelect()}
         <h1>what</h1>
@@ -157,6 +168,8 @@ class MainContent extends Component {
     )
   }
 
+  // Wrap the answer in a fitting element (not a div)
+=======
 
 /***************************************************
    
@@ -164,6 +177,7 @@ class MainContent extends Component {
     resefordon som används vid resa
    
 ***************************************************/
+
   images(index, vehicleType) {
     let ind = index
     let img = vehicleType.map((vehicle, indexVehicle) => {
