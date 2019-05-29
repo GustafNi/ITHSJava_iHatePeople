@@ -210,11 +210,7 @@ class MainContent extends Component {
     return prices
   }
 
-<<<<<<< HEAD
-  getSegments(route, vehicleType,placeType) {
-=======
   getSegments(route, vehicleType,placeType) {    
->>>>>>> dev_Nutcha
     let segments = route.segments.map((segment, indexSegment) => 
         <section key={indexSegment}>
           <div className="resaultBox">
@@ -267,15 +263,10 @@ class MainContent extends Component {
                 <h3>Stops:</h3>
                 {this.getSegments(route,vehicleType,placeType)}
                 <h3>Prices:</h3>
-<<<<<<< HEAD
-                {this.getPrices(route)}
-                <Maps children ={route.segments}/>
-=======
                 {this.getPrices(route)}   
                 <Maps children = {route.segments} places={placeType}/>         
                  {/* <Maps children={this.getSegments(route, vehicleType, placeType)}/>  */}
                 {/* <Maps lat={this.placeLat(route.depPlace,placeType)} lng={this.placeLng(route.depPlace,placeType)}/> */}
->>>>>>> dev_Nutcha
               </div>
             </section>
   
@@ -305,11 +296,7 @@ class MainContent extends Component {
               {this.getSegments(route,vehicleType,placeType)}
               <h3>Prices:</h3>
               {this.getPrices(route)}
-<<<<<<< HEAD
-              <Maps children ={route.segments}/>
-=======
               <Maps children = {route.segments} places={placeType}/>  
->>>>>>> dev_Nutcha
             </div>
           </section>
         )
