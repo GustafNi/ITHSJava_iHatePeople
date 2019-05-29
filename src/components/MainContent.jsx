@@ -3,6 +3,7 @@ import "./mainContent.css"
 import Maps from './Maps.jsx'
 import GetPrices from './GetPrices.jsx'
 import GetSegments from './GetSegments.jsx'
+import CurrencySelect from './currencySelect.jsx'
 require('dotenv').config();
 console.log(process.env);
 /* lägg form i hela */
@@ -27,7 +28,7 @@ class MainContent extends Component {
       expandedRows: []
     }
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
-
+    this.currencySelectChange = this.currencySelectChange.bind(this)
   }
 
   handleSearchSubmit = event => {
@@ -84,24 +85,15 @@ class MainContent extends Component {
     m = m < 10 ? '0' + m : m;
     return `${h} h ${m} m`;
   }
-
-  currencySelect() {
-    return (
-      <div>
-        <p>Currency</p>
-        <select onChange={e => this.setState({ currency: e.target.value })}>
-          <option value='USD'>USD</option>
-          <option value="EUR">EUR</option>
-          <option value="SEK">SEK</option>
-        </select>
-      </div>
-    )
+  currencySelectChange(value){
+    this.setState({ currency: value })
   }
+
   what() {
 
     return (
       <div className="what">
-        {this.currencySelect()}
+        {CurrencySelect(this.currencySelectChange)}
         <h1></h1>
 
         <form onSubmit={this.handleSearchSubmit}>
