@@ -122,6 +122,7 @@ class MainContent extends Component {
   what() {
 
     return (
+      // change to section
       <div className="what">
         {this.currencySelect()}
         <h1>what</h1>
@@ -152,6 +153,8 @@ class MainContent extends Component {
       </div>
     )
   }
+
+  // Wrap the answer in a fitting element (not a div)
   images(index, vehicleType) {
     let ind = index
     let img = vehicleType.map((vehicle, indexVehicle) => {

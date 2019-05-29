@@ -11,23 +11,11 @@ class Home extends Component {
     render() {
         return (
             <div className="grid-container">
-
-                <header className="headerContentOuterGrid">
-                        <Header />
-                </header>
-
-                <main className="mainContentOuterGrid">
-                    <MainContent />
-                </main>
-
-                <footer className="footerContent">
-                    <Footer />
-                </footer>
-
-
-
-
-
+                <Header />
+                
+                <MainContent />
+                
+                <Footer />
             </div>
         );
     }
