@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import "./mainContent.css"
+import Maps from './Maps.jsx'
 import train from '../img/train.png'
 import bus from '../img/bus.png'
 import walk from '../img/walk.png'
@@ -39,23 +40,17 @@ class MainContent extends Component {
     fetch(`http://free.rome2rio.com/api/1.4/json/Search?key=${key}&oName=${this.state.fromValue}&dName=${this.state.toValue}&currencyCode=${this.state.currency}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        console.log("DataFetch1",data)
         let routes = data.routes
-        this.setState({
-          routes
-        })
         let placesOutward = data.places
-        this.setState({
-          placesOutward
-        })
         let vehicleOutward = data.vehicles
         this.setState({
+          routes,
+          placesOutward,
           vehicleOutward
-        })
-
-
-        console.log(routes)
-        console.log(placesOutward)
+        })          
+               
+      
       })
       .catch(err =>
         this.setState({
@@ -65,23 +60,18 @@ class MainContent extends Component {
     fetch(`http://free.rome2rio.com/api/1.4/json/Search?key=${key}&oName=${this.state.toValue}&dName=${this.state.fromValue}&currencyCode=${this.state.currency}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        console.log("DataFecth2", data)
         let routes2 = data.routes
-        this.setState({
-          routes2
-        })
         let placesReturn = data.places
-        this.setState({
-          placesReturn
-        })
         let vehicleReturn = data.vehicles
         this.setState({
+          routes2,
+          placesReturn,
           vehicleReturn
-        })
 
-
-
-        console.log(routes2)
+        })       
+        
+       
       })
       .catch(err =>
         this.setState({
@@ -116,7 +106,7 @@ class MainContent extends Component {
     return (
       <div className="what">
         {this.currencySelect()}
-        <h1>what</h1>
+        <h1></h1>
 
         <form onSubmit={this.handleSearchSubmit}>
           <label>
@@ -167,6 +157,8 @@ class MainContent extends Component {
     })
     return img
   }
+
+ 
   
   
   placeName(index,placeType) {
@@ -218,7 +210,11 @@ class MainContent extends Component {
     return prices
   }
 
+<<<<<<< HEAD
   getSegments(route, vehicleType,placeType) {
+=======
+  getSegments(route, vehicleType,placeType) {    
+>>>>>>> dev_Nutcha
     let segments = route.segments.map((segment, indexSegment) => 
         <section key={indexSegment}>
           <div className="resaultBox">
@@ -271,8 +267,15 @@ class MainContent extends Component {
                 <h3>Stops:</h3>
                 {this.getSegments(route,vehicleType,placeType)}
                 <h3>Prices:</h3>
+<<<<<<< HEAD
                 {this.getPrices(route)}
                 <Maps children ={route.segments}/>
+=======
+                {this.getPrices(route)}   
+                <Maps children = {route.segments} places={placeType}/>         
+                 {/* <Maps children={this.getSegments(route, vehicleType, placeType)}/>  */}
+                {/* <Maps lat={this.placeLat(route.depPlace,placeType)} lng={this.placeLng(route.depPlace,placeType)}/> */}
+>>>>>>> dev_Nutcha
               </div>
             </section>
   
@@ -289,7 +292,6 @@ class MainContent extends Component {
       ? this.state.routes2.map((route, indexRouteR) => {
         const vehicleType = this.state.vehicleReturn
         const placeType = this.state.placesReturn
-        
         return (
  <section key={indexRouteR}>
 
@@ -303,7 +305,11 @@ class MainContent extends Component {
               {this.getSegments(route,vehicleType,placeType)}
               <h3>Prices:</h3>
               {this.getPrices(route)}
+<<<<<<< HEAD
               <Maps children ={route.segments}/>
+=======
+              <Maps children = {route.segments} places={placeType}/>  
+>>>>>>> dev_Nutcha
             </div>
           </section>
         )
@@ -322,9 +328,14 @@ class MainContent extends Component {
         {this.what()}
         <div className="how">
           <div><h1 id="how"></h1>{routesOutward}</div>
-          {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}
+          {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}          
         </div>
       </main>
+      
+        
+
+     
+      
     );
 
   }
