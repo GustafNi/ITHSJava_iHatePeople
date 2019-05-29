@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import "./mainContent.css"
 import Maps from './Maps.jsx'
-import GetPrices from './GetPrices.jsx'
-import GetSegments from './GetSegments.jsx'
-import CurrencySelect from './currencySelect.jsx'
-import ConvertTime from './ConvertTime'
+import GetPrices from './functions/GetPrices.jsx'
+import GetSegments from './functions/GetSegments.jsx'
+import CurrencySelect from './functions/CurrencySelect.jsx'
+import ConvertTime from './functions/ConvertTime'
 require('dotenv').config();
 console.log(process.env);
 /* lägg form i hela */
@@ -187,7 +187,6 @@ class MainContent extends Component {
     const routesOutward = this.routeOutward()
     const routesReturn = this.routeReturn()
     return (
-
       <main className="mainContentInnerGrid">
         {this.what()}
         <div className="how">
@@ -195,11 +194,6 @@ class MainContent extends Component {
           {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}          
         </div>
       </main>
-      
-        
-
-     
-      
     );
 
   }

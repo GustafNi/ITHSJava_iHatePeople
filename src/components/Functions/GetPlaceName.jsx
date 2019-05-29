@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 export default function GetPlaceName(index,placeType) {
     let ind = index
     let place = placeType.map((place, indexPlace) => {

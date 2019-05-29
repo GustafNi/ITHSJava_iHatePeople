@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from '../../../node_modules/react';
 export default function GetPrices(route) {
     let prices = route.indicativePrices && route.indicativePrices.map((price, indexPrices) =>{
       if(price.priceLow===undefined){

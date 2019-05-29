@@ -1,5 +1,5 @@
 import GetPlaceName from './GetPlaceName.jsx'
-import React, { Component } from 'react';
+import React, { Component } from '../../../node_modules/react';
 export default function GetStops(segment, placeType) {
     let stops = segment.stops
 

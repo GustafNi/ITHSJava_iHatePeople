@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import train from '../img/train.png'
-import bus from '../img/bus.png'
-import walk from '../img/walk.png'
-import car from '../img/car.png'
-import taxi from '../img/taxi.png'
+import React, { Component } from '../../../node_modules/react';
+import train from '../../img/train.png'
+import bus from '../../img/bus.png'
+import walk from '../../img/walk.png'
+import car from '../../img/car.png'
+import taxi from '../../img/taxi.png'
 export default function Images(index, vehicleType) {
     let ind = index
     let img = vehicleType.map((vehicle, indexVehicle) => {

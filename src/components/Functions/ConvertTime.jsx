@@ -1,5 +1,3 @@
-import React, { Component } from 'react'; 
-
 export default function ConvertTime(mins) {
     let h = Math.floor(mins / 60);
     let m = mins % 60;

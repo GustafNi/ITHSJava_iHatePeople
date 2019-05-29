@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Images from './images.jsx'
+import React, { Component } from '../../../node_modules/react';
+import Images from './Images.jsx'
 import GetStops from './GetStops.jsx'
 export default function getSegments(route, vehicleType,placeType) {    
   let segments = route.segments.map((segment, indexSegment) => 
