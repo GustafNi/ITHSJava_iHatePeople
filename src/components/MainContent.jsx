@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import "./mainContent.css"
 import Maps from './Maps.jsx'
-import train from '../img/train.png'
-import bus from '../img/bus.png'
-import walk from '../img/walk.png'
-import car from '../img/car.png'
-import taxi from '../img/taxi.png'
-import Maps from './Maps.jsx'
+import GetPrices from './GetPrices.jsx'
+import GetSegments from './GetSegments.jsx'
 require('dotenv').config();
 console.log(process.env);
 /* lägg form i hela */
@@ -134,119 +130,13 @@ class MainContent extends Component {
       </div>
     )
   }
-  images(index, vehicleType) {
-    let ind = index
-    let img = vehicleType.map((vehicle, indexVehicle) => {
-      if (ind === indexVehicle) {
-        if(vehicle.kind==="train"){
-          return <img key={indexVehicle} className="vehicle" src={train} alt="TrainIcon" />
-        }
-        if(vehicle.kind==="foot"){
-          return <img key={indexVehicle} className="vehicle" src={walk} alt="TrainIcon" />
-        }
-        if(vehicle.kind==="bus"){
-          return <img key={indexVehicle} className="vehicle" src={bus} alt="TrainIcon" />
-        }
-        if(vehicle.kind==="taxi"){
-          return <img key={indexVehicle} className="vehicle" src={taxi} alt="TrainIcon" />
-        }
-        if(vehicle.kind==="car"){
-          return <img key={indexVehicle} className="vehicle" src={car} alt="TrainIcon" />
-        } 
-      }
-    })
-    return img
-  }
-
- 
   
+
+
   
-  placeName(index,placeType) {
-    let ind = index
-    let place = placeType.map((place, indexPlace) => {
-      if (ind === indexPlace) {
-        return place.shortName
-      }
-    }
-    )
-    return place
-  }
 
 
-  getStops(segment, placeType) {
-    let stops = segment.stops
 
-    let stops2 = stops && stops.map((stop, indexStops) =>
-      <section key={indexStops}>
-        <p>Stop {indexStops + 1}: {this.placeName(stop.place,placeType)}</p>
-      </section>
-    )
-
-    return stops2
-  }
-
-  getPrices(route) {
-    let prices = route.indicativePrices && route.indicativePrices.map((price, indexPrices) =>{
-      if(price.priceLow===undefined){
-        return(
-          <section key={indexPrices}>
-          <h5>{price.name}</h5>
-          <p>{price.price} {price.currency}</p>
-          
-        </section>
-        )
-      }
-      else{
-        return(
-          <section key={indexPrices}>
-          <h5>{price.name}</h5>
-          <p>{price.priceLow} - {price.priceHigh} {price.currency}</p>
-        </section>
-        )
-      }
-      
-    }
-    )
-    return prices
-  }
-
-  getSegments(route, vehicleType,placeType) {    
-    let segments = route.segments.map((segment, indexSegment) => 
-        <section key={indexSegment}>
-          <div className="resaultBox">
-            {this.images(segment.vehicle, vehicleType)}
-            {this.getStops(segment,placeType)}
-          </div>
-        </section>
-    )
-    return segments
-  }
-
-  routeOutwards(){
-    const routes = this.state.routes.length
-      ? this.state.routes.map((route, indexRouteO) => {
-        const vehicleType = this.state.vehicleOutward
-        const placeType = this.state.placesOutward
-          return (
-            <section key={indexRouteO}>
-              <div className="resaultBox">
-                <h3>{route.name}</h3>
-                <p>Distance in km: {route.distance}</p>
-                <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
-                <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
-                <h3>Stops:</h3>
-                {this.getSegments(route,vehicleType,placeType)}
-                <h3>Prices:</h3>
-                {this.getPrices(route)}
-                <Maps children ={route.segments}/>
-              </div>
-            </section>
-          )
-      })
-      : null
-      
-      return routes
-  }
   routeOutward(){
     const routes = this.state.routes.length
       ? this.state.routes.map((route, indexRouteO) => {
@@ -261,9 +151,9 @@ class MainContent extends Component {
                 <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
                 <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
                 <h3>Stops:</h3>
-                {this.getSegments(route,vehicleType,placeType)}
+                {GetSegments(route,vehicleType,placeType)}
                 <h3>Prices:</h3>
-                {this.getPrices(route)}   
+                {GetPrices(route)} 
                 <Maps children = {route.segments} places={placeType}/>         
                  {/* <Maps children={this.getSegments(route, vehicleType, placeType)}/>  */}
                 {/* <Maps lat={this.placeLat(route.depPlace,placeType)} lng={this.placeLng(route.depPlace,placeType)}/> */}
@@ -293,9 +183,9 @@ class MainContent extends Component {
               <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
               <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
               <h3>Stops:</h3>
-              {this.getSegments(route,vehicleType,placeType)}
+              {GetSegments(route,vehicleType,placeType)}
               <h3>Prices:</h3>
-              {this.getPrices(route)}
+              {GetPrices(route)}
               <Maps children = {route.segments} places={placeType}/>  
             </div>
           </section>
