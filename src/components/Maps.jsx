@@ -22,7 +22,7 @@ class Maps extends Component {
        
 
 
-const segments = this.props.children
+
 
 /* const routesData = this.props.routes
 console.log(routesData)
@@ -43,14 +43,34 @@ var segmentData = routesData.map(route => {
             //     })
             // }) 
 
+const segments = this.props.children
+const places = this.props.places
+console.log(places)
+// console.log(decodedPolyline(segments[0].path))
 
  let coords =[] 
- segments.map(segment => 
-        
+ segments.map(segment => {
+  if(segment.segmentKind === "surface") {
     decodedPolyline(segment.path).map(coord => 
             coords.push(coord)
         )
-    ) 
+         
+      }else {
+        
+        console.log("places", this.props.places[segment.depPlace], "segments:", segment.depPlace)
+        let coord = {
+          lat: this.props.places[segment.depPlace].lat,
+          lng: this.props.places[segment.depPlace].lng,
+        }
+
+        coords.push(coord)
+        coord = {
+          lat: this.props.places[segment.arrPlace].lat,
+          lng: this.props.places[segment.arrPlace].lng,
+        }
+        coords.push(coord)
+      }
+ })
 
 
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
