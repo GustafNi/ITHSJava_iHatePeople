@@ -4,6 +4,7 @@ import Maps from './Maps.jsx'
 import GetPrices from './GetPrices.jsx'
 import GetSegments from './GetSegments.jsx'
 import CurrencySelect from './currencySelect.jsx'
+import ConvertTime from './ConvertTime'
 require('dotenv').config();
 console.log(process.env);
 /* lägg form i hela */
@@ -78,13 +79,7 @@ class MainContent extends Component {
     document.getElementById("how").innerHTML = "Outward trip"
   }
   handleChange = () => this.setState({ visibility: !this.state.visibility })
-  convertMinsToHrsMins(mins) {
-    let h = Math.floor(mins / 60);
-    let m = mins % 60;
-    h = h < 10 ? '0' + h : h;
-    m = m < 10 ? '0' + m : m;
-    return `${h} h ${m} m`;
-  }
+  
   currencySelectChange(value){
     this.setState({ currency: value })
   }
@@ -140,8 +135,8 @@ class MainContent extends Component {
               <div className="resaultBox">
                 <h3>{route.name}</h3>
                 <p>Distance in km: {route.distance}</p>
-                <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
-                <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
+                <p>Traveltime in minutes: {ConvertTime(route.totalDuration)}</p>
+                <p>Duration {ConvertTime(route.totalTransitDuration)}</p>
                 <h3>Stops:</h3>
                 {GetSegments(route,vehicleType,placeType)}
                 <h3>Prices:</h3>
@@ -172,8 +167,8 @@ class MainContent extends Component {
               <h3>{route.name}</h3>
               <p>Distance in km: {route.distance}</p>
              
-              <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
-              <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
+              <p>Traveltime in minutes: {ConvertTime(route.totalDuration)}</p>
+              <p>Duration {ConvertTime(route.totalTransitDuration)}</p>
               <h3>Stops:</h3>
               {GetSegments(route,vehicleType,placeType)}
               <h3>Prices:</h3>
