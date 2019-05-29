@@ -30,6 +30,12 @@ class MainContent extends Component {
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
 
   }
+
+  // Function running when Search button gets klicked//
+// First the fetch request url gets the data from the api then converts it from jSon.
+// From there it adds the routes and places arrays into the state.
+// After that it reverts the values in the url to get the return trip info
+
   handleSearchSubmit = event => {
     event.preventDefault()
 
@@ -87,6 +93,9 @@ class MainContent extends Component {
       )
     document.getElementById("how").innerHTML = "Outward trip"
   }
+
+  //Function to show travel time in hours and minutes
+
   handleChange = () => this.setState({ visibility: !this.state.visibility })
   convertMinsToHrsMins(mins) {
     let h = Math.floor(mins / 60);
@@ -95,7 +104,9 @@ class MainContent extends Component {
     m = m < 10 ? '0' + m : m;
     return `${h} h ${m} m`;
   }
-
+  
+  //Function to change the currency in the fetch request url
+  
   currencySelect() {
     return (
       <div>
