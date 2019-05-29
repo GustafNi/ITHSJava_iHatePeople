@@ -86,6 +86,13 @@ class MainContent extends Component {
     return `${h} h ${m} m`;
   }
 
+ /***************************************************
+   
+      Knappen för välja valuta  
+   
+   *************************************************/
+
+
   currencySelect() {
     return (
       <div>
@@ -99,7 +106,11 @@ class MainContent extends Component {
     )
   }
   what() {
-
+/***************************************************
+   
+     Sökfunktion för resa
+   
+   *************************************************/
     return (
       <div className="what">
         {this.currencySelect()}
@@ -107,16 +118,18 @@ class MainContent extends Component {
 
         <form onSubmit={this.handleSearchSubmit}>
           <label>
+                {/* Checkbox för om man vill göra en return trip från därifrån man reste */}
             <input type="checkbox"
               checked={this.state.visibility}
               onChange={this.handleChange}
             />
             Add return trip
        </label>
+         {/* Input text för vart man vill resa ifrån */}
           <p>What?</p>
           <input type='text' name='departureCity' placeholder='from?' onChange={e => this.setState({ fromValue: e.target.value })}></input>
 
-
+      {/* Lista från vart man kan resa till */}
           <p>Where?</p>
           <select onChange={e => this.setState({ toValue: e.target.value })}>
             <option placeholder='destination?'></option>
@@ -131,6 +144,12 @@ class MainContent extends Component {
       </div>
     )
   }
+  /***************************************************
+   
+    Fordssymboler som visad vid vad för form av 
+    resefordon som används vid resa
+   
+***************************************************/
   images(index, vehicleType) {
     let ind = index
     let img = vehicleType.map((vehicle, indexVehicle) => {
@@ -171,7 +190,11 @@ class MainContent extends Component {
 
   getStops(segment, placeType) {
     let stops = segment.stops
+/***************************************************
+   
+      Skriver ut vilka stop som görs på resan
 
+***************************************************/
     let stops2 = stops && stops.map((stop, indexStops) =>
       <section key={indexStops}>
         <p>Stop {indexStops + 1}: {this.placeName(stop.place,placeType)}</p>
@@ -180,7 +203,11 @@ class MainContent extends Component {
 
     return stops2
   }
-
+/***************************************************
+   
+    Skriver ut lägsta och högsta pris i vald valuta
+     
+***************************************************/
   getPrices(route) {
     let indicativePrices = route.indicativePrices
     let prices = indicativePrices && indicativePrices.map((price, indexPrices) =>
@@ -191,7 +218,11 @@ class MainContent extends Component {
     )
     return prices
   }
-
+/***************************************************
+   
+     Skriver resutlat med alla stop med fordonsbild
+     
+***************************************************/
   getSegments(route, vehicleType,placeType) {    
     let segments = route.segments.map((segment, indexSegment) => 
         <section key={indexSegment}>
@@ -203,7 +234,11 @@ class MainContent extends Component {
     )
     return segments
   }
-
+/***************************************************
+   
+     Skriver ut resultat lista för utresa med information 
+     
+***************************************************/
   routeOutward(){
     const routes = this.state.routes.length
       ? this.state.routes.map((route, indexRouteO) => {
@@ -240,6 +275,11 @@ class MainContent extends Component {
         const vehicleType = this.state.vehicleReturn
         const placeType = this.state.placesReturn
         return (
+ /***************************************************
+   
+     Skriver ut Återresan med infromation
+     
+***************************************************/
  <section key={indexRouteR}>
 
             <div className="resaultBox">
@@ -265,7 +305,11 @@ class MainContent extends Component {
     const routesOutward = this.routeOutward()
     const routesReturn = this.routeReturn()
     return (
-
+/***************************************************
+   
+     Knapp om man vill resa tillbaka eller inte.
+     
+***************************************************/
       <main className="mainContentInnerGrid">
         {this.what()}
         <div className="how">
