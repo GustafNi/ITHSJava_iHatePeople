@@ -221,9 +221,8 @@ class MainContent extends Component {
                 {this.getSegments(route,vehicleType,placeType)}
                 <h3>Prices:</h3>
                 {this.getPrices(route)}   
-                <Maps children = {route.segments} places={placeType}/>         
-                 {/* <Maps children={this.getSegments(route, vehicleType, placeType)}/>  */}
-                {/* <Maps lat={this.placeLat(route.depPlace,placeType)} lng={this.placeLng(route.depPlace,placeType)}/> */}
+                <Maps children = {route.segments} places={placeType}/>        
+              
               </div>
             </section>
   
