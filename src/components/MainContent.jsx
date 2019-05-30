@@ -112,7 +112,8 @@ class MainContent extends Component {
    
    *************************************************/
     return (
-      <div className="what">
+      <div  className="what">
+        <div class="container-fluid">
         {this.currencySelect()}
         <h1></h1>
 
@@ -139,8 +140,9 @@ class MainContent extends Component {
           </select>
 
 
-          <button style={{ margin: '0 0 0 20px' }}>Search</button>
+          <button style={{ margin: '0 0 0 0px' }}>Search</button>
         </form>
+        </div>
       </div>
     )
   }
@@ -313,7 +315,9 @@ class MainContent extends Component {
       <main className="mainContentInnerGrid">
         {this.what()}
         <div className="how">
-          <div><h1 id="how"></h1>{routesOutward}</div>
+
+          {/* ID för att kunna hämta listan för resan */}
+          <div id="how">{routesOutward}</div>
           {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}          
         </div>
       </main>
@@ -325,6 +329,7 @@ class MainContent extends Component {
     );
 
   }
+ 
 }
 
 export default MainContent
