@@ -4,7 +4,7 @@ import Header from "../components/Header.jsx"
 import MainContent from "../components/MainContent.jsx"
 import Footer from "../components/Footer.jsx"
 
-//import "./Home.css"
+import "./Home.css"
 
 
 class Home extends Component {
@@ -15,11 +15,13 @@ class Home extends Component {
             Class kommer från bootstrap
             Container skapar en gridflexbox med 12 colummer
             ***************************************************/
-            <section class="container">
+            <section classname="MainSetion">
               
                 <Header />
+           
+                <MainContent  />
+          
                 
-                <MainContent />
                 
                 <Footer />
                

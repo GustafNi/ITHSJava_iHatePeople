@@ -6,9 +6,11 @@ import "./header.css"
 
 function Header() {
     return (
-        <header>
-            <nav className='navbar'>
-                <ul>
+        <header class="container-fluid bg-#006699">
+            <div>
+            {/* att namnge en class till 'navbar' gör att den ligger lodrätt på sidan */}
+            <nav className="thenavbar">
+                
                     <li>
                          <a className="home" href="#">Home</a>
                     </li>
@@ -21,7 +23,7 @@ function Header() {
                     <li>
                         <a className="contact" href="#">Contact</a>
                      </li>
-                </ul>
+                
             </nav>
             <nav className="socialButtons">
                     <li>
@@ -34,6 +36,7 @@ function Header() {
                         <a className="twitt" href="#">twitt</a>
                     </li>
             </nav>
+            </div>
         </header>
     );
 

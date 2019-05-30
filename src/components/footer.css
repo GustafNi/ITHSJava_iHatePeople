@@ -1,8 +1,5 @@
-/***************************************
-        Sätter fotter till höger på något sätt
-****************************************
- *{
-
-
-    position: relative;
-}*/
+footer{
+        background-color: #006699;
+        margin: 0px;
+        padding: 20px;
+    }
