@@ -10,6 +10,11 @@ import Footer from "../components/Footer.jsx"
 class Home extends Component {
     render() {
         return (
+
+            /***************************************************
+            Class kommer från bootstrap
+            Container skapar en gridflexbox med 12 colummer
+            ***************************************************/
             <section class="container">
               
                 <Header />
