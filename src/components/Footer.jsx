@@ -6,7 +6,7 @@ import "./footer.css"
 function Footer(){
 
     return (
-        <footer className="container">
+        <footer class="container-fluid">
             footer
         </footer>
     );
