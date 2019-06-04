@@ -1,17 +1,15 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom";
+
 import "./footer.css"
 
 
-class Footer extends Component {
+function Footer(){
 
-    render() {
-
-        return (
-            <div className="container">footer</div>
-        );
-
-    }
+    return (
+        <footer class="container-fluid">
+            footer
+        </footer>
+    );
 
 }
 

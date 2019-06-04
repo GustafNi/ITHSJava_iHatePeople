@@ -10,25 +10,22 @@ import "./Home.css"
 class Home extends Component {
     render() {
         return (
-            <div className="grid-container">
 
-                <header className="headerContentOuterGrid">
-                        <Header />
-                </header>
-
-                <main className="mainContentOuterGrid">
-                    <MainContent />
-                </main>
-
-                <footer className="footerContent">
-                    <Footer />
-                </footer>
-
-
-
-
-
-            </div>
+            /***************************************************
+            Class kommer från bootstrap
+            Container skapar en gridflexbox med 12 colummer
+            ***************************************************/
+            <section classname="MainSetion">
+              
+                <Header />
+           
+                <MainContent  />
+          
+                
+                
+                <Footer />
+               
+            </section>
         );
     }
 }
