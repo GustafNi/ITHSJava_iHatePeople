@@ -10,13 +10,22 @@ import "./Home.css"
 class Home extends Component {
     render() {
         return (
-            <div className="grid-container">
+
+            /***************************************************
+            Class kommer från bootstrap
+            Container skapar en gridflexbox med 12 colummer
+            ***************************************************/
+            <section classname="MainSetion">
+              
                 <Header />
+           
+                <MainContent  />
+          
                 
-                <MainContent />
                 
                 <Footer />
-            </div>
+               
+            </section>
         );
     }
 }

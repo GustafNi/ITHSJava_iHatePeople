@@ -1,22 +1,33 @@
-
-.navbar{
-  display: flex;
-  justify-content: space-evenly;
-
-  /* inherited  */
-  list-style-type: none;
-  margin-block-start: none;
-  margin-block-end: none;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  padding-inline-start: 0px;
+header{
+    background-color: #006699;
+    
+}
+.logoContainer {
+    display:flex;
+    justify-content: center;
+}
+.logo {
+    
+    height: 90px;
+    width: 90px;
+    
 }
 
-.socialButtons{
-  display: flex;
-  grid-area: socialLogo;
+.socialButtonsList {
+    float: right;
+    
+}
+.socialButtons {
+    height: 50px;
+    width: 50px;
+    padding: 2px
 }
 
-/* first media 680*/
 
- 
+a {
+    color: #ffcc00
+    
+}
+a:hover {
+    color: yellow
+}
