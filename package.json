@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "decode-google-map-polyline": "^1.0.1",
+    "bootstrap": "^4.3.1",
     "dotenv": "^8.0.0",
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0",

@@ -4,3 +4,39 @@
 .Router{
     margin-bottom: 0%;
 }
+.vehicle{
+    height: 50px;
+    
+}
+.vehicle2{
+    height: 20px;
+    position: absolute;
+    left: 5px;
+}
+
+.stops{
+    border-left: solid #06abf5 6px;
+    width: 300px;
+    text-align: left;
+    padding-left: 10px;
+}
+.table {
+    width: 80%;
+    border: 2px solid blueviolet;
+    border-radius: 5px;
+    padding:3px 0;
+    border-right: 2px solid blueviolet;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  th.column{
+    width: 28%;  
+    
+  }
+  th.column1{
+    width: 5%;
+  }
+  #how{
+    text-align: center;
+  }
+  
