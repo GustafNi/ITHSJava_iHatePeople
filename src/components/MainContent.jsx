@@ -177,6 +177,7 @@ class MainContent extends Component {
           return <img key={indexVehicle} className="vehicle" src={train} alt="TrainIcon" />
           
         }
+<<<<<<< HEAD
         if (vehicle.kind === "foot") {
           return <img key={indexVehicle} className="vehicle" src={walk} alt="TrainIcon" />
         }
@@ -192,6 +193,20 @@ class MainContent extends Component {
         if (vehicle.kind === "plane") {
           return <img key={indexVehicle} className="vehicle" src={plane} alt="PlaneIcon" />
         }
+=======
+        if(vehicle.kind==="foot"){
+          return <img key={indexVehicle} className="vehicle" src={walk} alt="WalkIcon" />
+        }
+        if(vehicle.kind==="bus"){
+          return <img key={indexVehicle} className="vehicle" src={bus} alt="BusIcon" />
+        }
+        if(vehicle.kind==="taxi"){
+          return <img key={indexVehicle} className="vehicle" src={taxi} alt="TaxiIcon" />
+        }
+        if(vehicle.kind==="car"){
+          return <img key={indexVehicle} className="vehicle" src={car} alt="CarIcon" />
+        } 
+>>>>>>> origin
       }
     })
     return img
