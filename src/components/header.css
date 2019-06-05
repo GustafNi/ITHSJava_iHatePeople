@@ -1,7 +1,33 @@
 header{
     background-color: #006699;
+    
+}
+.logoContainer {
+    display:flex;
+    justify-content: center;
 }
 .logo {
+    
+    height: 90px;
+    width: 90px;
+    
+}
+
+.socialButtonsList {
     float: right;
     
+}
+.socialButtons {
+    height: 50px;
+    width: 50px;
+    padding: 2px
+}
+
+
+a {
+    color: #ffcc00
+    
+}
+a:hover {
+    color: yellow
 }
