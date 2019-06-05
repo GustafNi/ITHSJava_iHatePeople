@@ -362,30 +362,60 @@ class MainContent extends Component {
       ? this.state.routes2.map((route, indexRouteR) => {
         const vehicleType = this.state.vehicleReturn
         const placeType = this.state.placesReturn
+
         return (
-          /***************************************************
-            
-              Skriver ut Återresan med infromation
-              
-         ***************************************************/
-          <section key={indexRouteR}>
+          <div class="HowTo">
+            <section key={indexRouteR}>
+              <div class="accordion" id="accordionExample">
 
-            <div className="resaultBox">
-              <h3>{route.name}</h3>
-              <p>Distance in km: {route.distance}</p>
-              <p>Traveltime in minutes: {this.convertMinsToHrsMins(route.totalDuration)}</p>
-              <p>Duration {this.convertMinsToHrsMins(route.totalTransitDuration)}</p>
-              <h3>Stops:</h3>
-              {this.getSegments(route, vehicleType, placeType)}
-              <h3>Prices:</h3>
-              {this.getPrices(route)}
-              <Maps children={route.segments} places={placeType} />
-            </div>
-          </section>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h2 class="mb-0">
+                    </h2>
+                    <table class="table">
+                      <thead>
+                        <tr >
+                          <th class="column1" scope="col">Stops</th>
+                          <th class="column" scope="col">Transport</th>
+                          <th class="column" scope="col">Distance in km</th>
+                          <th class="column" scope="col">Duration </th>
+                          <th>Prices</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th class="column1" scope="row">
+                            <button id="expandButton" onClick={this.expandButton} class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target={`#collapses${indexRouteR}`} aria-expanded="false" aria-controls="collapseThree">
+                              +
+                    </button>
+                          </th>
+                          <th class="column">{route.name}</th>
+                          <th class="column">{route.distance}</th>
+                          <th class="column">{this.convertMinsToHrsMins(route.totalDuration)}</th>
+                          <th class="column">{this.getPrices(route)}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+
+
+
+                  </div>
+
+                  <div id={`collapses${indexRouteR}`} class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+
+                      <Maps children={route.segments} places={placeType} />
+                      {this.getSegments(route, vehicleType, placeType)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
         )
-
       })
       : null
+
     return routes
   }
 
