@@ -364,39 +364,62 @@ class MainContent extends Component {
         const placeType = this.state.placesReturn
 
         return (
-          <div class="HowTo">
-            <section key={indexRouteR}>
-              <div class="accordion" id="accordionExample">
 
-                <div class="card">
-                  <div class="card-header" id="headingThree">
-                    <h2 class="mb-0">
-                    </h2>
-                    <table class="table">
-                      <thead>
-                        <tr >
-                          <th class="column1" scope="col">Stops</th>
-                          <th class="column" scope="col">Transport</th>
-                          <th class="column" scope="col">Distance in km</th>
-                          <th class="column" scope="col">Duration </th>
-                          <th>Prices</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th class="column1" scope="row">
-                            <button id="expandButton" onClick={this.expandButton} class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target={`#collapses${indexRouteR}`} aria-expanded="false" aria-controls="collapseThree">
-                              +
-                    </button>
-                          </th>
-                          <th class="column">{route.name}</th>
-                          <th class="column">{route.distance}</th>
-                          <th class="column">{this.convertMinsToHrsMins(route.totalDuration)}</th>
-                          <th class="column">{this.getPrices(route)}</th>
-                        </tr>
-                      </tbody>
-                    </table>
+          /***************************************************
+            
+              Skriver ut Återresan med infromation
+              
+         ***************************************************/
+        <div class="HowTo">
+        <section key={indexRouteR}>
+          <div class="accordion" id="accordionExample">
 
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                </h2>
+                <table class="table">
+                  <thead>
+                    <tr >
+                      <th class="column1" scope="col">Stops</th>
+                      <th class="column" scope="col">Transport</th>
+                      <th class="column" scope="col">Distance in km</th>
+                      <th class="column" scope="col">Duration </th>
+                      <th>Prices</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th class="column1" scope="row">
+                        <button id="expandButton" onClick={this.expandButton} class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target={`#collapse${indexRouteR}`} aria-expanded="false" aria-controls="collapseThree">
+                          +
+                </button>
+                      </th>
+                      <th class="column">{route.name}</th>
+                      <th class="column">{route.distance}</th>
+                      <th class="column">{this.convertMinsToHrsMins(route.totalDuration)}</th>
+                      <th class="column">{this.getPrices(route)}</th>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+
+              </div>
+
+              <div id={`collapse${indexRouteR}`} class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                <div class="card-body">
+
+                  <Maps children={route.segments} places={placeType} />
+                  {this.getSegments(route, vehicleType, placeType)}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+        
+        )
 
 
                   </div>
@@ -436,7 +459,7 @@ class MainContent extends Component {
           <div>
             <h4 id="how"></h4>
             {routesOutward}</div>
-          {this.state.visibility && <div><h1>Return trip</h1>{routesReturn}</div>}
+          {this.state.visibility && <div><h4 id="how">Return trip</h4>{routesReturn}</div>}
         </div>
       </main>
 
