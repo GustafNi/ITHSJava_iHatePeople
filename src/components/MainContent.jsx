@@ -362,7 +362,9 @@ class MainContent extends Component {
       ? this.state.routes2.map((route, indexRouteR) => {
         const vehicleType = this.state.vehicleReturn
         const placeType = this.state.placesReturn
+
         return (
+
           /***************************************************
             
               Skriver ut Återresan med infromation
@@ -419,8 +421,24 @@ class MainContent extends Component {
         
         )
 
+
+                  </div>
+
+                  <div id={`collapses${indexRouteR}`} class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+
+                      <Maps children={route.segments} places={placeType} />
+                      {this.getSegments(route, vehicleType, placeType)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        )
       })
       : null
+
     return routes
   }
 
