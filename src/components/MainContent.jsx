@@ -420,22 +420,6 @@ class MainContent extends Component {
       </div>
         
         )
-
-
-                  </div>
-
-                  <div id={`collapses${indexRouteR}`} class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                    <div class="card-body">
-
-                      <Maps children={route.segments} places={placeType} />
-                      {this.getSegments(route, vehicleType, placeType)}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-        )
       })
       : null
 
