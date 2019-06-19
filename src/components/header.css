@@ -23,7 +23,12 @@ header{
     padding: 2px
 }
 
+/*
+@feedback
+Prefer to select by 
+css-classes rather than selecting by tagname
 
+*/
 a {
     color: #ffcc00
     

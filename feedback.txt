@@ -1,0 +1,27 @@
+
+Feedback from Kenneth Österholm
+2019-06-19
+
+= = HTML = =
+= = CSS = =
+Good use of Flexbox
+
+Prefer to select by 
+css-classes rather than selecting by tagname
+(header.css)
+
+= = React = =
+Good use of React-router
+Good use of functional components
+
+= = JavaScript = =
+Many complexed features has been created with 
+advanced JavaScript.
+
+= = General = =
+Remember to not commit out-commented code to master
+
+Good placing credentials in .env-file 
+and ignore together with .gitignore
+
+Very good job !!
